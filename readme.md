@@ -1,99 +1,101 @@
-# 🎵 Lavalink Server Setup Guide (Super Beginner Friendly)
+# Lavalink Setup Guide (Clear & Beginner-Friendly)
 
-This guide is written for people with **zero coding knowledge**.
-Just follow each step exactly.
-
----
-
-# 📌 What You’ll Do
-
-✔ Install Java
-✔ Setup network correctly
-✔ Run Lavalink
-✔ Complete YouTube login
-✔ Connect to your bot
+Follow step by step. Don’t skip anything.
 
 ---
 
-# ☕ STEP 1: Install Java
+## Requirements
 
-Lavalink **needs Java 17+**.
+- Java 17+
+- Lavalink.jar
+- application.yml
 
-### ✔ Check if already installed
+---
+
+## Step 1: Install Java
+
+### Windows
+
+1. Open browser
+2. Go to: [https://www.azul.com/downloads/?package=jdk](https://www.azul.com/downloads/?package=jdk)
+3. Download **Windows x64 (.msi)**
+4. Install it (Next → Install)
+5. Make sure **Add to PATH** is enabled
+
+Check:
 
 ```bash
 java -version
 ```
 
-If it shows a version → skip install
-If not → install it
+✔ If version shows → OK\
+❌ If error → reinstall properly
 
 ---
 
-# 🌐 STEP 2: IMPORTANT — Find Your IP (Read Carefully)
+### Linux
 
-This is where many users get confused.
+Open terminal and run:
+
+- **Ubuntu / Debian**
+
+```bash
+sudo apt update
+sudo apt install default-jdk
+```
+
+- **Fedora / CentOS**
+
+```bash
+sudo dnf install java-latest-openjdk-devel
+```
+
+- **Arch**
+
+```bash
+sudo pacman -S jdk-openjdk
+```
+
+Check:
+
+```bash
+java -version
+```
 
 ---
 
-## 🪟 Windows (Very Clear Method)
+## Step 2: Find Your IP
 
-Run:
+### Windows
 
 ```cmd
 ipconfig
 ```
 
-Now you will see multiple sections like:
+Find this line:
 
 ```
-Wireless LAN adapter Wi-Fi:
-   IPv4 Address . . . . . . . . . . : 192.168.1.5
+IPv4 Address : 192.168.x.x
 ```
 
-👉 **You ONLY need this line:**
-
-- **IPv4 Address**
-
-👉 Ignore:
-
-- IPv6 Address
-- Subnet Mask
-- Default Gateway
-
-✔ Your IP will look like:
-
-- `192.168.x.x`
-- OR `10.x.x.x`
+👉 That number is your IP
 
 ---
 
-## 🐧 Linux (Very Clear Method)
-
-Run:
+### Linux
 
 ```bash
 ip a
 ```
 
-You will see many blocks like:
+Find:
 
 ```
-2: wlan0: ...
-    inet 192.168.1.5/24
+inet 192.168.x.x/24
 ```
 
-👉 **You ONLY need the line with:**
-
-- `inet`
-
+👉 Your IP = part before `/`\
 Example:
-
-```
-inet 192.168.1.5/24
-```
-
-✔ Your IP is:
 
 ```
 192.168.1.5
@@ -101,26 +103,35 @@ inet 192.168.1.5/24
 
 ---
 
-## ⚠️ What to IGNORE
+## Step 3: Where to Use IP
 
-Do NOT use:
+You MUST use the same IP in **both places**:
 
-- `127.0.0.1` (local only)
-- `lo` interface
-- anything with `127.x.x.x`
+### application.yml
+
+```yaml
+server:
+  port: 2333
+  address: "YOUR_IP"
+```
+
+### Bot config
+
+```js
+host: "YOUR_IP";
+```
 
 ---
 
-## ✔ Which IP Should You Use?
+### Important
 
-- Same PC bot → use `127.0.0.1`
-- Different PC / VPS / VPN → use your real IP (from above)
+- Same PC → use `127.0.0.1`
+- Different PC/VPS → use your real IP
+- If IP doesn’t match → bot won’t connect
 
 ---
 
-# ▶️ STEP 3: Start Lavalink
-
-Run:
+## Step 4: Start Lavalink
 
 ```bash
 java -jar Lavalink.jar
@@ -128,108 +139,96 @@ java -jar Lavalink.jar
 
 ---
 
-# 🔐 STEP 4: YouTube Authorization (IMPORTANT — READ)
+## Step 5: YouTube Login (Very Important)
 
-When you run Lavalink, the terminal will show **a LOT of logs**.
+When you start Lavalink:
 
-👉 Don’t panic — this is normal.
+👉 Terminal will show **many logs**\
+👉 You don’t need all of them
 
 ---
 
-## 🔍 What You Are Looking For
+### What to find
 
-Somewhere in those logs, you will see something like:
-
-- A message telling you to visit a link
-- A code (example: `ABCD-EFGH`)
-
-It may look like:
+Look for a line like this:
 
 ```
-Go to https://www.google.com/device and enter code XXXX-XXXX
+Go to https://www.google.com/device and enter code ABCD-EFGH
 ```
 
 ---
 
-## 👉 What You Should Do
+### Important understanding
 
-1. Open this link:
+- You do NOT create this code
+- Lavalink automatically generates it
+- Your code will be **different** every time
 
-```
-https://www.google.com/device
-```
-
-2. Enter the code shown in your terminal
-
-3. Login with a Google account
-
----
-
-## ⚠️ Important Tips
-
-- Use a **new / spare account**
-- This step happens **only once**
-- Logs may scroll fast — scroll up if needed
-
----
-
-## ✅ After Login
-
-Go back to terminal.
-
-You will now see something like:
+Example:
 
 ```
-Refresh token: 1//0gxxxxxxxxxxxx
-```
-
-👉 This long code is VERY IMPORTANT
-
----
-
-# 📝 STEP 5: Save the Token
-
-1. Open `application.yml`
-
-2. Find:
-
-```
-refreshToken:
-```
-
-3. Add your token:
-
-```
-refreshToken: "YOUR_TOKEN_HERE"
+MGR-XFX-WFQM
 ```
 
 ---
 
-4. Find:
+### What you do
+
+1. Open: [https://www.google.com/device](https://www.google.com/device)
+2. Enter **the exact code from YOUR terminal**
+3. Login with Google
+
+---
+
+### If you don’t see the code
+
+- Scroll up in terminal
+- Or restart Lavalink
+
+---
+
+### After login
+
+Terminal will show:
 
 ```
-skipInitialization: false
+Refresh token: 1//xxxxxxxxxxxx
 ```
 
-Change to:
+👉 This is VERY important\
+👉 Copy it exactly
 
+---
+
+## Step 6: Save Token
+
+Open `application.yml`
+
+Add:
+
+```yaml
+refreshToken: "YOUR_TOKEN"
+skipInitialization: true   //set the skipInitialization to true
 ```
-skipInitialization: true
+
+Save file.
+
+---
+
+## Step 7: Restart Lavalink
+
+```bash
+java -jar Lavalink.jar
 ```
 
 ---
 
-5. Save file
-6. Restart Lavalink
-
----
-
-# 🤖 STEP 6: Connect to Your Bot
+## Step 8: Connect Bot
 
 ```js
-const fallbackLavalinkNodes = [
+const nodes = [
   {
-    host: "YOUR_IP_HERE",
+    host: "YOUR_IP", // which you have added in host in application.yml file
     port: 2333,
     password: "youshallnotpass",
     secure: false,
@@ -239,31 +238,22 @@ const fallbackLavalinkNodes = [
 
 ---
 
-# 🔒 Security Tips
-
-- Change default password
-- Don’t expose server publicly
-- Avoid `0.0.0.0`
-
----
-
-# ✅ DONE!
-
-✔ Lavalink running
-✔ YouTube connected
-✔ Bot ready 🎶
-
----
-
-# ❗ Common Mistakes
+## Common Mistakes
 
 - Using wrong IP
+- Copying example code instead of real one
 - Not saving token
 - Not restarting server
-- Copying wrong line from logs
 
 ---
 
-# 🎉 Final Result
+## Final Result
 
-Your bot can now play music using Lavalink 🚀
+If everything is correct:
+
+✔ Lavalink running\
+✔ YouTube connected\
+✔ Bot connected\
+✔ Music working
+
+---
