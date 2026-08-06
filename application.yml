@@ -1,0 +1,45 @@
+server: # REST and WS server
+  port: 2333
+  address: 127.0.0.1
+  http2:
+    enabled: false # Whether to enable HTTP/2 support
+
+lavalink:
+  plugins:
+    # THIS is where Lavalink downloads the actual YouTube plugin
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
+      repository: "https://maven.lavalink.dev/releases"
+  server:
+    password: "youshallnotpass"
+    sources:
+      youtube: false # Keep this false! The plugin takes over.
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      nico: true
+      http: true
+      local: false
+
+# THIS is where you configure the plugin after it downloads
+plugins:
+  youtube:
+    enabled: true
+    oauth:
+      enabled: true
+      skipInitialization: false
+      refreshToken: ""
+
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    clients:
+      - TVHTML5EMBEDDED
+      - MUSIC
+      - ANDROID_VR
+      - WEB
+      - WEBEMBEDDED
+
+    # (Your filters and other settings continue below here...)
+    filters: # All filters are enabled by default
+      volume: true
