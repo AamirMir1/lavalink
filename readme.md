@@ -153,7 +153,7 @@ When you start Lavalink:
 Look for a line like this:
 
 ```
-Go to https://www.google.com/device and enter code ABCD-EFGH
+Go to https://www.google.com/device and enter code XXXX-XXXX
 ```
 
 ---
